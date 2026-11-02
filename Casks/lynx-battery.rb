@@ -1,8 +1,8 @@
 # Homebrew cask for Lynx Battery. release.sh fills in the version and checksum
 # and pushes the result to the tap repository as Casks/lynx-battery.rb.
 cask "lynx-battery" do
-  version "1.0.0"
-  sha256 "ccac44ee07ee6d8776e56c6c57feb6a69c3d3bd1d548826d8749e8eaa1541be1"
+  version "1.1.0"
+  sha256 "4b8fcce693c1fc813b2c5edaa0712a86db0d004b51ef5c99d4be8753be4e8c72"
 
   url "https://github.com/Mansfera/lynx-battery/releases/download/v#{version}/Lynx-Battery-#{version}.dmg"
   name "Lynx Battery"
@@ -18,6 +18,15 @@ cask "lynx-battery" do
   # download. Clearing the quarantine flag is what "Open Anyway" does.
   postflight_steps do
     run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{appdir}}/Lynx Battery.app"]
+
+    # Every upgrade runs the uninstall stanza below, which removes the helper. Put it back if the
+    # charge limit was on; the helper decides that itself. A fresh install has no config, so no sudo.
+    if_path_exists "/Library/Application Support/com.mansfera.lynxbattery/charge-config.json" do
+      run "{{appdir}}/Lynx Battery.app/Contents/Library/LaunchServices/com.mansfera.lynxbattery.helper",
+          args:         ["--restore"],
+          sudo:         true,
+          must_succeed: false
+    end
   end
 
   # The charge-limit helper restores normal charging when launchd stops it.
