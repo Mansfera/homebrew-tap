@@ -1,8 +1,8 @@
 # Homebrew cask for Lynx Battery. release.sh fills in the version and checksum
 # and pushes the result to the tap repository as Casks/lynx-battery.rb.
 cask "lynx-battery" do
-  version "1.2.2"
-  sha256 "6fea0cb041993b5f4a493a9ac19e18bb52dde415c91a47f09d17b4651f4f20ad"
+  version "1.2.3"
+  sha256 "efca51b9dd38bbcfe823909f5aab799b8bdf45b3484c2c3beca865b7bb884374"
 
   url "https://github.com/Mansfera/lynx-battery/releases/download/v#{version}/Lynx-Battery-#{version}.dmg"
   name "Lynx Battery"
